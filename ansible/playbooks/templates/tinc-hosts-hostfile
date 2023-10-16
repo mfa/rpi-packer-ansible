@@ -1,0 +1,3 @@
+Subnet = {{ tinc_ip|trim }}/32
+
+{{ tinc_pub_key }}

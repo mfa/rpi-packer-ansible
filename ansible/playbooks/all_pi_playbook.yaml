@@ -1,0 +1,27 @@
+---
+- name: all PIs
+  hosts:
+    - default
+  vars_files:
+    - "vars/{{ hostname }}.yaml"
+  vars:
+    install_updates: True
+
+  tasks:
+    - name: Update all packages to their latest version
+      ansible.builtin.apt:
+        name: "*"
+        state: latest
+        update_cache: true
+      when: install_updates
+    - name: set hostname
+      ansible.builtin.hostname:
+        name: "{{ hostname }}"
+    - name: SSH server
+      ansible.builtin.include_tasks: ssh.yaml
+    - name: Set Password
+      ansible.builtin.include_tasks: password.yaml
+    - name: WiFi
+      ansible.builtin.include_tasks: wifi.yaml
+    - name: tinc
+      ansible.builtin.include_tasks: tinc.yaml

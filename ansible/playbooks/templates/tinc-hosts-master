@@ -1,0 +1,4 @@
+Address = {{ tinc_master_address|trim }}
+Subnet = {{ tinc_master_ip|trim }}/32
+
+{{ tinc_master_pub_key }}

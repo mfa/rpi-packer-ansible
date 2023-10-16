@@ -1,0 +1,56 @@
+---
+- name: install tinc
+  ansible.builtin.package:
+    name: tinc
+    state: latest
+- name: create folders
+  ansible.builtin.file:
+    path: "/etc/tinc/{{ tinc_net_name|trim }}/hosts"
+    state: directory
+    mode: '0755'
+- name: create tinc.conf
+  ansible.builtin.template:
+    src: ./tinc.conf
+    dest: "/etc/tinc/{{ tinc_net_name|trim }}/tinc.conf"
+    mode: '0600'
+- name: create rsa_key.priv
+  ansible.builtin.copy:
+    content: "{{ tinc_private_key }}"
+    dest: "/etc/tinc/{{ tinc_net_name|trim }}/rsa_key.priv"
+    mode: '0400'
+- name: create tinc-up
+  ansible.builtin.copy:
+    content: |
+      #!/bin/sh
+      ip link set $INTERFACE up
+      ip addr add {{ tinc_ip|trim }}/24 dev $INTERFACE
+    dest: "/etc/tinc/{{ tinc_net_name|trim }}/tinc-up"
+    mode: '0700'
+- name: create tinc-down
+  ansible.builtin.copy:
+    content: |
+      #!/bin/sh
+      ip addr del {{ tinc_ip|trim }}/24 dev $INTERFACE
+      ip link set $INTERFACE down
+    dest: "/etc/tinc/{{ tinc_net_name|trim }}/tinc-down"
+    mode: '0700'
+- name: create hosts/master
+  ansible.builtin.template:
+    src: ./tinc-hosts-master
+    dest: "/etc/tinc/{{ tinc_net_name|trim }}/hosts/master"
+    mode: '0600'
+- name: create hosts/<hostname>
+  ansible.builtin.template:
+    src: ./tinc-hosts-hostfile
+    dest: "/etc/tinc/{{ tinc_net_name|trim }}/hosts/{{ hostname }}"
+    mode: '0600'
+- name: add folder for tinc
+  ansible.builtin.file:
+    path: /etc/systemd/system/tinc.service.wants
+    state: directory
+    mode: '0755'
+- name: enable tinc
+  ansible.builtin.file:
+    src: /lib/systemd/system/tinc@.service
+    dest: "/etc/systemd/system/tinc.service.wants/tinc@{{ tinc_net_name|trim }}.service"
+    state: link

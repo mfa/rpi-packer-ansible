@@ -1,0 +1,4 @@
+.packer_cache/
+ansible/.vault_pass.txt
+raspios-arm.img
+root
