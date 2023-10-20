@@ -1,0 +1,16 @@
+{
+    "provisioners": [
+	{
+	    "type": "ansible",
+	    "inventory_file_template": "default ansible_host=/mnt_chroot ansible_connection=chroot\n",
+	    "playbook_file": "./ansible/playbooks/all_pi_playbook.yaml",
+	    "extra_arguments": [
+		"-vvv",
+		"--vault-password-file",
+		"./ansible/.vault_pass.txt",
+		"--extra-vars",
+		"hostname=zero7"
+	    ]
+	}
+    ]
+}
