@@ -2,4 +2,4 @@
 ansible/.vault_pass.txt
 raspios-arm.img
 root
-# packer.json
+packer.json
