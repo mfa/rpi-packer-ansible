@@ -3,6 +3,7 @@
   hosts:
     - default
   vars_files:
+    - vars/common.yaml
     - "vars/{{ hostname }}.yaml"
   vars:
     install_updates: True
