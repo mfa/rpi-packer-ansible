@@ -15,6 +15,11 @@
         state: latest
         update_cache: true
       when: install_updates
+    - name: install some packages
+      ansible.builtin.package:
+        name:
+          - vim
+        state: latest
     - name: set hostname
       ansible.builtin.hostname:
         name: "{{ hostname }}"
