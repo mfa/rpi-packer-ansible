@@ -9,7 +9,7 @@
 		"--vault-password-file",
 		"./ansible/.vault_pass.txt",
 		"--extra-vars",
-		"hostname=zero7"
+		"hostname={{user `hostname`}}"
 	    ]
 	}
     ]
