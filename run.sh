@@ -19,7 +19,7 @@ docker compose build
 docker compose run --rm builder build packer.json
 
 # cleanup
-rm $varfile
+rm $varsfile
 
 
 # without docker compose:
