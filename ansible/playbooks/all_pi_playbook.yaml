@@ -32,3 +32,6 @@
       ansible.builtin.include_tasks: wifi.yaml
     - name: tinc
       ansible.builtin.include_tasks: tinc.yaml
+    - name: set timezone
+      community.general.timezone:
+        name: Europe/Berlin
