@@ -19,6 +19,7 @@
       ansible.builtin.package:
         name:
           - vim
+          - python3-pip
         state: latest
     - name: set hostname
       ansible.builtin.hostname:
