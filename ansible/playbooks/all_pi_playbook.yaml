@@ -35,3 +35,8 @@
     - name: set timezone
       community.general.timezone:
         name: Europe/Berlin
+    - name: activate alias ll
+      ansible.builtin.replace:
+        path: /home/pi/.bashrc
+        regexp: "^#alias ll='ls -l'"
+        replace: "alias ll='ls -l'"
