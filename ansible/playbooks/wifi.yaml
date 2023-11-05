@@ -3,4 +3,11 @@
   ansible.builtin.template:
     src: ./wpa_supplicant.conf
     dest: /etc/wpa_supplicant/wpa_supplicant.conf
-    mode: 600
+    mode: '0600'
+- name: network manager version
+  ansible.builtin.template:
+    src: ./nm-wifi
+    dest: "/etc/NetworkManager/system-connections/{{ wifi_ssid|trim }}"
+    owner: root
+    group: root
+    mode: '0600'
