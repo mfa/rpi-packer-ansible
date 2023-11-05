@@ -1,5 +1,5 @@
 [connection]
-id={{ wifi_ssid }}
+id={{ wifi_ssid|trim }}
 uuid=9cbf2e10-d590-4f4c-a2d3-3f6966c38135
 type=wifi
 interface-name=wlan0
@@ -7,12 +7,12 @@ autoconnect=true
 
 [wifi]
 mode=infrastructure
-ssid={{ wifi_ssid }}
+ssid={{ wifi_ssid|trim }}
 
 [wifi-security]
 auth-alg=open
 key-mgmt=wpa-psk
-psk={{ wifi_password }}
+psk={{ wifi_password|trim }}
 
 [ipv4]
 method=auto
