@@ -11,3 +11,13 @@
     owner: root
     group: root
     mode: '0600'
+# not enough, needs something in rfkill too
+# - name: append regdom
+#   replace:
+#     path: /boot/cmdline.txt
+#     regexp: '^([\w](?!.*\b{{ item }}\b).*)$'
+#     replace: '\1 {{ item }}'
+#   with_items:
+#     - "cfg80211.ieee80211_regdom=DE"
+- name: unblock wifi
+  ansible.builtin.command: raspi-config nonint do_wifi_country DE
