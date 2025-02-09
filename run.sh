@@ -7,9 +7,10 @@ fi
 
 if [[ $1 == zero* ]]; then
      base_board=raspios-lite-arm.json
-fi
-if [[ $1 == zero21 || $1 == zero22 || $1 == zero23 || $1 == pi4 || $1 == pi4c ]]; then
-     base_board=raspios-lite-arm64.json
+elif [[ $1 == zero21 || $1 == zero22 || $1 == zero23 ]]; then
+    base_board=raspios-lite-arm64.json
+else
+    base_board=raspios-lite-arm64.json
 fi
 
 # generate a file with hostname as variable
