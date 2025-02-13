@@ -5,10 +5,10 @@ if [ "$1" == "" ]; then
     exit 1
 fi
 
-if [[ $1 == zero* ]]; then
-     base_board=raspios-lite-arm.json
-elif [[ $1 == zero21 || $1 == zero22 || $1 == zero23 ]]; then
+if [[ $1 == zero21 || $1 == zero22 || $1 == zero23 ]]; then
     base_board=raspios-lite-arm64.json
+elif [[ $1 == zero* ]]; then
+    base_board=raspios-lite-arm.json
 else
     base_board=raspios-lite-arm64.json
 fi
