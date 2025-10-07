@@ -1,8 +1,8 @@
 {
   "builders": [{
-    "type": "arm",
-    "file_urls" : ["https://downloads.raspberrypi.com/raspios_lite_armhf/images/raspios_lite_armhf-2024-11-19/2024-11-19-raspios-bookworm-armhf-lite.img.xz"],
-    "file_checksum_url": "https://downloads.raspberrypi.com/raspios_lite_armhf/images/raspios_lite_armhf-2024-11-19/2024-11-19-raspios-bookworm-armhf-lite.img.xz.sha256",
+    "type": "arm7l",
+    "file_urls" : ["https://downloads.raspberrypi.com/raspios_lite_armhf/images/raspios_lite_armhf-2025-10-02/2025-10-01-raspios-trixie-armhf-lite.img.xz"],
+    "file_checksum_url": "https://downloads.raspberrypi.com/raspios_lite_armhf/images/raspios_lite_armhf-2025-10-02/2025-10-01-raspios-trixie-armhf-lite.img.xz.sha256",
     "file_checksum_type": "sha256",
     "file_target_extension": "xz",
     "file_unarchive_cmd": [
@@ -10,7 +10,7 @@
       "--decompress",
       "$ARCHIVE_PATH"
     ],
-    "image_build_method": "resize",
+    "image_build_method": "new",
     "image_path": "raspios-arm.img",
     "image_size": "4G",
     "image_type": "dos",

@@ -1,10 +1,10 @@
 # Raspberry PI image building using Packer, QEMU and Ansible
 
-using https://github.com/mkaczanowski/packer-builder-arm
+using https://github.com/michalfita/packer-plugin-cross
 
 ## create one raspberry image
 
-This needs a json file in `boards`.
+currently only arm7 is working; arm64 needs fixing
 
 ```
 sh run.sh zero4

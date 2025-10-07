@@ -1,8 +1,7 @@
 ---
 services:
   builder:
-    build:
-      context: .
+    image: ghcr.io/michalfita/packer-plugin-cross:latest
     privileged: true
     volumes:
       - /dev:/dev

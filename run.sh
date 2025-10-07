@@ -8,19 +8,23 @@ fi
 if [[ $1 == zero21 || $1 == zero22 || $1 == zero23 ]]; then
     base_board=raspios-lite-arm64.json
 elif [[ $1 == zero* ]]; then
-    base_board=raspios-lite-arm.json
+    HCL=boards/raspios-lite-arm.pkr.hcl
 else
-    base_board=raspios-lite-arm64.json
+    # FIXME
+    HCL=boards/raspios-lite-arm64.pkr.hcl
 fi
 
-# generate a file with hostname as variable
-varsfile=$(mktemp --suffix ".json")
-echo $1 | jq -R '{"variables": {"hostname": .}}' > $varsfile
-
-jq -s '.[0] * .[1] * .[2]' $varsfile boards/${base_board} boards/ansible-provisioner.json > packer.json
+varsfile=packer.pkr.hcl
+cat $HCL > $varsfile
+cat <<DELIMITER >> $varsfile 
+variable "hostname" {
+type = string
+default = "$1"
+}
+DELIMITER
 
 docker compose build
-docker compose run --rm builder build packer.json
+docker compose run --rm builder build $varsfile
 
 # cleanup
 rm $varsfile
