@@ -1,22 +1,22 @@
 ---
 - name: all PIs
-  hosts:
-    - default
+  hosts: all
   vars_files:
     - vars/common.yaml
     - "vars/{{ hostname }}.yaml"
   vars:
-    install_updates: True
+    install_updates: false
 
   tasks:
     - name: Update all packages to their latest version
       ansible.builtin.apt:
-        name: "*"
         state: latest
         update_cache: true
+        # upgrade: full
       when: install_updates
     - name: install some packages
       ansible.builtin.package:
+        update_cache: yes
         name:
           - vim
           - python3-pip
@@ -33,8 +33,11 @@
     - name: tinc
       ansible.builtin.include_tasks: tinc.yaml
     - name: set timezone
-      community.general.timezone:
-        name: Europe/Berlin
+      ansible.builtin.file:
+        src: /usr/share/zoneinfo/Europe/Berlin
+        dest: /etc/localtime
+        state: link
+        force: yes
     - name: activate alias ll
       ansible.builtin.replace:
         path: /home/pi/.bashrc
