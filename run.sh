@@ -6,7 +6,7 @@ if [ "$1" == "" ]; then
 fi
 
 if [[ $1 == zero23 ]]; then
-    HCL=boards/dietpi-armv7.pkr.hcl
+    HCL=boards/dietpi-arm64.pkr.hcl
 elif [[ $1 == zero21 || $1 == zero22 ]]; then
     base_board=raspios-lite-arm64.json
 elif [[ $1 == zero* ]]; then

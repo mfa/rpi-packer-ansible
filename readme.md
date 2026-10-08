@@ -10,7 +10,7 @@ currently only arm7 is working; arm64 needs fixing
 sh run.sh zero4
 ```
 
-`zero23` (Zero 2 W) uses DietPi 32-bit (ARMv7, Trixie) instead of raspios.
+`zero23` (Zero 2 W) uses DietPi 64-bit (ARMv8, Trixie) instead of raspios.
 Wifi goes through wpa_supplicant (`dietpi-wifi.txt`), hostname/password/timezone are set in `/boot/dietpi.txt` and applied by DietPi on first boot.
 The image is written to `dietpi-arm.img`.
 
