@@ -1,7 +1,7 @@
 ---
 - name: ssh keys
   ansible.posix.authorized_key:
-    user: pi
+    user: "{{ ssh_user | default('pi') }}"
     exclusive: true
     key: !vault |
           $ANSIBLE_VAULT;1.1;AES256
@@ -18,3 +18,4 @@
   ansible.builtin.systemd:
     name: ssh
     enabled: true
+  when: ssh_service | default(true)

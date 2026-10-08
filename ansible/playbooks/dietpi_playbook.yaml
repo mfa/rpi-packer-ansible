@@ -1,0 +1,53 @@
+---
+# DietPi applies most settings from /boot/dietpi.txt on first boot
+- name: DietPi
+  hosts: all
+  vars_files:
+    - vars/common.yaml
+    - "vars/{{ hostname }}.yaml"
+
+  tasks:
+    - name: install some packages
+      ansible.builtin.package:
+        name:
+          - vim
+        state: latest
+    - name: dietpi.txt first boot settings
+      ansible.builtin.lineinfile:
+        path: /boot/dietpi.txt
+        regexp: "^{{ item.key }}="
+        line: "{{ item.key }}={{ item.value }}"
+      loop: "{{ settings | dict2items }}"
+      no_log: true
+      vars:
+        settings:
+          AUTO_SETUP_AUTOMATED: 1
+          AUTO_SETUP_ACCEPT_LICENSE: 1
+          AUTO_SETUP_NET_HOSTNAME: "{{ hostname }}"
+          AUTO_SETUP_NET_ETHERNET_ENABLED: 0
+          AUTO_SETUP_NET_WIFI_ENABLED: 1
+          AUTO_SETUP_NET_WIFI_COUNTRY_CODE: DE
+          AUTO_SETUP_TIMEZONE: Europe/Berlin
+          # -1=Dropbear, -2=OpenSSH
+          AUTO_SETUP_SSH_SERVER_INDEX: -1
+          # plain text here; DietPi encrypts it and removes it on first boot
+          AUTO_SETUP_GLOBAL_PASSWORD: "{{ pi_user_password | trim }}"
+    - name: wifi credentials (wpa_supplicant)
+      ansible.builtin.lineinfile:
+        path: /boot/dietpi-wifi.txt
+        regexp: "^{{ item.key | regex_escape }}="
+        line: "{{ item.key }}='{{ item.value | trim }}'"
+      loop:
+        - { key: "aWIFI_SSID[0]", value: "{{ wifi_ssid }}" }
+        - { key: "aWIFI_KEY[0]", value: "{{ wifi_password }}" }
+      no_log: true
+    - name: SSH keys
+      ansible.builtin.include_tasks: ssh.yaml
+      vars:
+        ssh_user: "{{ item }}"
+        ssh_service: false
+      loop:
+        - root
+        - dietpi
+    - name: tinc
+      ansible.builtin.include_tasks: tinc.yaml

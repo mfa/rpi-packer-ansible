@@ -5,3 +5,4 @@ root
 packer.json
 .packer_plugins/
 crash.log
+dietpi-arm.img
